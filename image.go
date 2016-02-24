@@ -115,12 +115,12 @@ func (i imageInfo) FillEdges(normed image.Image, edge1, edge2 color.Color) *imag
 	return imaging.PasteCenter(splitBackground, normed)
 }
 
-func (i imageInfo) CompileImage() error {
+func (i imageInfo) CompileImage(aggregate aggregateColor) error {
 	img, err := imaging.Open(i.Source)
 	if err != nil {
 		return fmt.Errorf("Error opening file: %s; type: %v", i.Source, err)
 	}
-	if edge1, edge2, ok := i.EdgeColors(img, prominentColor); ok {
+	if edge1, edge2, ok := i.EdgeColors(img, aggregate); ok {
 		normalised := i.FillEdges(i.Normalise(img), edge1, edge2)
 		err = imaging.Save(normalised, i.Destination)
 	} else {

@@ -24,7 +24,7 @@ func dataHandler(rw http.ResponseWriter, req *http.Request) {
 	}
 	log.Printf("File recieved: %s\n", filepath.Base(imgData.Source))
 	startTime := time.Now()
-	if err := imgData.CompileImage(); err != nil {
+	if err := imgData.CompileImage(averageColor); err != nil {
 		http.Error(rw, err.Error(), 400)
 		return
 	}
